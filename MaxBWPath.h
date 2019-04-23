@@ -7,6 +7,7 @@
 #include <time.h>
 #include <random>
 #include<algorithm>
+#include <sys/time.h>
 
 using namespace std;
 

@@ -6,6 +6,14 @@
 #include<MaxBWPath.h>
 
 using namespace std;
+long getMicrotime();
+
+long getMicrotime()
+{
+  struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  return currentTime.tv_sec * (int)1e6 + currentTime.tv_usec;
+}
 
 int main()
 {
@@ -46,7 +54,7 @@ int main()
   cout<<i<<"->";
   Graph_test[i].display();
   }
-
+  long time1 = getMicrotime();
   srand(time(0));
   /* Construct a cycle of connected nodes */
   for(unsigned int i = 0;i<NUMBER_OF_VERTICES;i++)
@@ -237,7 +245,8 @@ int main()
 
 
 
-
+long time2 = getMicrotime();
+cout<<"Total execution time : "<<(time2-time1)*1e-6<<endl;
 
 
 
