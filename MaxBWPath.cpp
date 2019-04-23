@@ -47,7 +47,7 @@ int main()
   Graph_test[i].display();
   }
 
-  srand(42);
+  srand(time(0));
   /* Construct a cycle of connected nodes */
   for(unsigned int i = 0;i<NUMBER_OF_VERTICES;i++)
   {
@@ -129,31 +129,30 @@ int main()
     Graph_1[AdjNode].SetDad(0);
     Graph_1[AdjNode].GetDad();
     Graph_1[AdjNode].SetNodeBandwidth(AdjNodeWeight);
-    bool b = Heap_test->Insert(AdjNode,AdjNodeWeight);
+    bool b = VecArray1->Insert(AdjNode,AdjNodeWeight);
 
   }
 
   cout<<"\n__First stage done__\n"<<endl;
 
   /* Printing the heap data structure */
-  Heap_test->print();
+  VecArray1->print();
   cout<<"\n\nStarting the algorithm.. \n"<<"_____"<<endl;
 
-  while(Heap_test->SizeOfHeapIsZero()!=0)
+  while(VecArray1->SizeOfArrayIsZero()!=0)
   {
-    int Node = Heap_test->MaxEdge();
-    int weight = Heap_test->MaxWeight();
+    int Node = VecArray1->MaxEdge();
+    int weight = VecArray1->MaxWeight();
     #if OUTPUT_LOG
     cout<<"Node and weight : "<<Node<<" "<<weight<<endl;
     #endif
     //cout<<Heap_test->SizeOfHeapIsZero()<<endl;
-    if(Heap_test->position[Node]!=-1)
-    {
-        Heap_test->Delete(Heap_test->position[Node]);
-    }
+
+    VecArray1->Delete(Node);
+
 
     #if OUTPUT_LOG
-    Heap_test->print();
+    VecArray1->print();
     #endif
     Graph_1[Node].MakeNodesIntree();
     //cout<<Heap_test->SizeOfHeapIsZero()<<endl;
@@ -191,8 +190,8 @@ int main()
         #endif
         Graph_1[AdjNode].SetNodeBandwidth(std::min({BW_node1,AdjNode_Weight1}));
         int AdjNodeBW = Graph_1[AdjNode].GetBandWidth();
-        Heap_test->Insert(AdjNode,AdjNodeBW);
-        Heap_test->print();
+        VecArray1->Insert(AdjNode,AdjNodeBW);
+        VecArray1->print();
       }
 
       else if((Graph_1[AdjNode].IsNodeFringe() == true)&&(AdjNodeBW1<(std::min({BW_node1,AdjNode_Weight1}))))
@@ -200,18 +199,17 @@ int main()
         #if OUTPUT_LOG
         cout << "\033[1;32mNode is fringe : \033[0m"<<AdjNode<<std::endl;
         #endif
-        if(Heap_test->position[AdjNode]!=-1)
-        {
-          Heap_test->Delete(Heap_test->position[AdjNode]);
-        }
 
-        Heap_test->print();
+        VecArray1->Delete(AdjNode);
+
+
+        VecArray1->print();
         Graph_1[AdjNode].SetDad(Node);
         //ToDo
         Graph_1[AdjNode].SetNodeBandwidth(std::min({BW_node1,AdjNode_Weight1}));
         int AdjNodeBW2 = Graph_1[AdjNode].GetBandWidth();
-        Heap_test->Insert(AdjNode,AdjNodeBW2);
-        Heap_test->print();
+        VecArray1->Insert(AdjNode,AdjNodeBW2);
+        VecArray1->print();
 
       }
 
@@ -228,7 +226,7 @@ int main()
     #endif
   }
 
-  int Node_D = 999;
+  int Node_D = 106;
   cout<<Node_D<<"<-";
   while(Graph_1[Node_D].DisplayDadNodes()!=0)
   {

@@ -215,13 +215,13 @@ private:
   }
 
 public:
-  bool Insert_VecArray(T val,T wt)
+  bool Insert(T val,T wt)
   {
     NodeName.push_back(val);
     NodeWeight.push_back(wt);
   }
 
-  bool Delete_VecArray(T val)
+  bool Delete(T val)
   {
     /* Find the position of val in the array */
     std::vector<int>::iterator it = std::find(NodeName.begin(), NodeName.end(), val);
@@ -245,7 +245,7 @@ public:
     return *result;
   }
 
-  void PrintArrays()
+  void print()
   {
     #if OUTPUT_LOG
     std::cout << "\033[1;33mContents of the array : \033[0m"<<std::endl;
@@ -253,6 +253,11 @@ public:
     print(NodeWeight);
     std::cout << "\033[1;33mEnd of heap\033[0m"<<std::endl;
     #endif
+  }
+
+  int SizeOfArrayIsZero()
+  {
+    return NodeName.size();
   }
 
 };
