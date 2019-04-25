@@ -59,7 +59,7 @@ int main()
   /* Construct a cycle of connected nodes */
   for(unsigned int i = 0;i<NUMBER_OF_VERTICES;i++)
   {
-    unsigned int weight_insert = rand()%100;
+    unsigned int weight_insert = rand()%1000000;
     if(i==(NUMBER_OF_VERTICES-1))
     {
       Graph_1[i].insert(i,99999);
@@ -74,9 +74,9 @@ int main()
   {
     for(unsigned int NV = 0;NV<(NUMBER_OF_VERTICES);NV++)
     {
-      if((rand()%5000)<=6)
+      if((rand()%50000)<=60)
       {
-        unsigned int weight_insert = rand()%100;
+        unsigned int weight_insert = rand()%1000000;
         Graph_1[i].insert(NV,weight_insert);
         Graph_1[NV].insert(i,weight_insert);
       }
@@ -103,21 +103,15 @@ int main()
   Graph_test[1].ViewNodeStatus();
   Graph_test[2].ViewNodeStatus();
   */
+  int src = 0;
+  Graph_1[src].MakeNodesIntree();
 
-  Graph_1[0].MakeNodesIntree();
+  Graph_1[src].SetNodeBandwidth(99999);
 
-  Graph_1[0].SetNodeBandwidth(99999);
+  int Node_prev = src;
 
-  int Node_prev = 0;
-
-  std::vector<int> AdjacentNodes = Graph_1[0].GetAdjacentNodes();
-  std::vector<int> AdjacentNodeWeights = Graph_1[0].GetAdjacentNodesWeights();
-  /*
-  if(Heap_test->SizeOfHeapIsZero() == 1)
-  {
-    cout<<"Heap is null"<<endl;
-    cout<<Heap_test->SizeOfHeapIsZero()<<endl;
-  }*/
+  std::vector<int> AdjacentNodes = Graph_1[src].GetAdjacentNodes();
+  std::vector<int> AdjacentNodeWeights = Graph_1[src].GetAdjacentNodesWeights();
 
   /*
   Graph_test[0].ViewNodeStatus();
@@ -154,7 +148,6 @@ int main()
     #if OUTPUT_LOG
     cout<<"Node and weight : "<<Node<<" "<<weight<<endl;
     #endif
-    //cout<<Heap_test->SizeOfHeapIsZero()<<endl;
 
     VecArray1->Delete(Node);
 
@@ -163,8 +156,7 @@ int main()
     VecArray1->print();
     #endif
     Graph_1[Node].MakeNodesIntree();
-    //cout<<Heap_test->SizeOfHeapIsZero()<<endl;
-    //std::vector<int> AdjacentNodes = Graph_test[Node].GetAdjacentNodesWithout(Node_prev);
+
     std::vector<int> AdjacentNodes = Graph_1[Node].GetAdjacentNodes();//Without(Node_prev);
     std::vector<int> AdjacentNodeWeights = Graph_1[Node].GetAdjacentNodesWeights();//Without(Node_prev);
     Node_prev = Node;
@@ -172,7 +164,7 @@ int main()
     for(unsigned int count = 1;count<AdjacentNodes.size();count++)
     {
       int AdjNode = (int)AdjacentNodes[count];
-      //cout<<"Status of the node "<<AdjNode<<" : "<<endl;
+
       Graph_1[AdjNode].ViewNodeStatus();
 
       int AdjNodeBW1 = Graph_1[AdjNode].GetBandWidth();
@@ -191,8 +183,7 @@ int main()
         #endif
         Graph_1[AdjNode].MakeNodesFringe();
         Graph_1[AdjNode].SetDad(Node);
-        //int BW_node = Graph_test[Node].GetBandWidth();
-        //int AdjNode_Weight = Graph_test[AdjNode].GetWeight();
+
         #if OUTPUT_LOG
         cout<<"Weight of the adjacent node and bandwidth of the current node : "<<AdjNode_Weight1<<" & "<<BW_node1<<endl;
         #endif
@@ -234,14 +225,15 @@ int main()
     #endif
   }
 
-  int Node_D = 106;
+  int Node_D = 1889;
   cout<<Node_D<<"<-";
-  while(Graph_1[Node_D].DisplayDadNodes()!=0)
+  while(Graph_1[Node_D].DisplayDadNodes()!=src)
   {
     cout<<Graph_1[Node_D].DisplayDadNodes()<<"<-";
     Node_D=Graph_1[Node_D].DisplayDadNodes();
   }
-  cout<<"0"<<endl;
+  cout<<src<<endl;
+  cout<<"BW is : "<<Graph_1[Node_D].GetBandWidth()<<endl;
 
 
 
